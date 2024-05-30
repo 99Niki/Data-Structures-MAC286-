@@ -137,13 +137,14 @@ public class SymbolTester {
         }
 
         //TODO: Code your pattern here
-
-        for(int i = 10; i <mData.size()-11; i++) {
-            if(xDaysLow(i, 10) //20 days low, close near low of the day
+        for(int i = 20; i <mData.size()-11; i++) {
+            if(xDaysLow(i, 20) //20 days low, close near low of the day
+                    && mData.elementAt(i).getOpen() < mData.elementAt(i-1).getLow() //open lower than low of i-1
                     && mData.elementAt(i-1).getClose() <  mData.elementAt(i-2).getClose()
                     && mData.elementAt(i-2).getClose() <  mData.elementAt(i-3).getClose()
                     && mData.elementAt(i-3).getClose() <  mData.elementAt(i-4).getClose()
                     && (mData.elementAt(i).getClose() - mData.elementAt(i).getLow())/(mData.elementAt(i).range()) < 0.1)
+                    //close near lower of the day
             {
                 float entryprice = mData.elementAt(i+1).getOpen();
                 float exitPrice = mData.elementAt(i+1+riskFactor).getClose();
@@ -153,12 +154,13 @@ public class SymbolTester {
                 //add the trade to the Trade vector
                 mTrades.add(T);
 
-            }else if(xDaysHigh(i, 10) // 20 days high & i-1,i-2, and i-3: close higher than close of previous day
+            }else if(xDaysHigh(i, 20) // 20 days high & i-1,i-2, and i-3: close higher than close of previous day
+                    && mData.elementAt(i).getOpen() > mData.elementAt(i-1).getHigh() //open of i is higher than high of i-1
                     && mData.elementAt(i-1).getClose()>  mData.elementAt(i-2).getClose()
                     && mData.elementAt(i-2).getClose()>  mData.elementAt(i-3).getClose()
                     && mData.elementAt(i-3).getClose()>  mData.elementAt(i-4).getClose()
-                    && (mData.elementAt(i).getHigh() - mData.elementAt(i).getClose())/(mData.elementAt(i).getHigh() - mData.elementAt(i).range()) < 0.1)
-            // close near the high 10%
+                    && (mData.elementAt(i).getHigh() - mData.elementAt(i).getClose())/(mData.elementAt(i).range()) < 0.1)
+                    // close near the high 10%
             {
                 //buy at open of i+1 (tomorrow)
                 float entryprice = mData.elementAt(i+1).getOpen();
