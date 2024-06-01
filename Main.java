@@ -10,7 +10,6 @@ public class Main {
         int[] riskFactors = {1,2,3,5,10};
         String path = "/Users/nikizheng/Desktop/Nikii HW/MAC286/Project/Data/";
         String file = "Stocks.txt";
-        Vector<String> symbols = Helper.loadSymbols(path,file);
         for(int riskFactor: riskFactors)
         {
             System.out.println("riskFactor: "+riskFactor);
